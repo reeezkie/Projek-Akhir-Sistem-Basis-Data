@@ -1,35 +1,45 @@
 # 🏫 Smart School Database - SDN 1 Kota Malang
+> Perancangan & Implementasi Basis Data Relasional untuk Sistem Manajemen Akademik Terpusat
 
-Proyek Akhir Sistem Basis Data (SBD) - Fakultas Ilmu Komputer, Universitas Brawijaya  
-**Kelompok 1:**
-1. Anne Mazaya Syafiyah (`245150307111020`)
-2. Rezky Auliasarie (`245150300111014`)
-3. Zeyra Rahma Alivia (`245150301111016`)
+[![Status Project](https://img.shields.io/badge/Status-Completed-success.svg)]()
+[![Oracle / SQL](https://img.shields.io/badge/Database-Oracle%20%2F%20SQL-blue.svg)]()
+[![Institution](https://img.shields.io/badge/Universitas-Brawijaya-red.svg)]()
+
+Repositori ini berisi kode sumber, skrip DDL/DML, dan dokumentasi laporan lengkap untuk **Proyek Akhir Sistem Basis Data**. Proyek ini dirancang untuk membangun sistem basis data relasional guna mengoptimalkan manajemen data akademik di **Sekolah Dasar Negeri (SDN) 1 Kota Malang** secara terpusat, terstruktur, dan *real-time*.
+
+---
+
+## 🏛️ Informasi Akademik
+* **Mata Kuliah:** Sistem Basis Data (SBD)
+* **Institusi:** Fakultas Ilmu Komputer, Universitas Brawijaya (FILKOM UB)
+
+### 👥 Tim Penyusun (Kelompok 1)
+1. **Anne Mazaya Syafiyah** (245150307111020)
+2. **Rezky Auliasarie** (245150300111014)
+3. **Zeyra Rahma Alivia** (245150301111016)
 
 ---
 
 ## 📌 Latar Belakang
-Pengelolaan data yang efisien dan akurat merupakan kebutuhan penting bagi institusi pendidikan seperti **Sekolah Dasar Negeri 1 Kota Malang**. Sebelumnya, sekolah ini masih mengandalkan sistem manual (pencatatan di kertas dan spreadsheet sederhana) yang menyebabkan proses administrasi lambat, rentan terhadap *human error* (seperti salah tulis atau kehilangan data), serta tidak mendukung akses data secara *real-time*.
+Pengelolaan data yang efisien dan akurat merupakan kebutuhan penting bagi institusi pendidikan seperti **Sekolah Dasar Negeri 1 Kota Malang**. Sebelumnya, sekolah ini masih mengandalkan sistem manual (pencatatan di kertas dan *spreadsheet* sederhana) yang menyebabkan proses administrasi lambat, rentan terhadap *human error* (seperti salah tulis atau kehilangan data), serta tidak mendukung akses data secara *real-time*.
 
 Dengan mengimplementasikan sistem basis data relasional ini, proyek ini bertujuan untuk membantu SDN 1 Kota Malang mencapai pengelolaan data yang modern, terstruktur, efisien, dan mendukung pengambilan keputusan berbasis data (*data-driven decision making*).
 
 ---
 
 ## 📊 Model Basis Data & Relasi Entitas (ERD)
-
 Sistem ini terdiri dari 7 entitas utama dengan relasi sebagai berikut:
-* **GURU** (1) $\leftrightarrow$ (M) **KELAS** (Wali Kelas)
-* **GURU** (M) $\leftrightarrow$ (M) **MATA_PELAJARAN** via tabel **MENGAJAR** $\leftrightarrow$ (M) **KELAS**
-* **SISWA** (N) $\leftrightarrow$ (1) **KELAS**
-* **SISWA** (N) $\leftrightarrow$ (1) **WALI_SISWA**
-* **SISWA** (1) $\leftrightarrow$ (N) **NILAI** $\leftrightarrow$ (1) **MATA_PELAJARAN**
-* **SISWA** (1) $\leftrightarrow$ (N) **KEHADIRAN**
+* **GURU** (1) ↔ (M) **KELAS** (Wali Kelas)
+* **GURU** (M) ↔ (M) **MATA_PELAJARAN** via tabel relasi **MENGAJAR** ↔ (M) **KELAS**
+* **SISWA** (N) ↔ (1) **KELAS**
+* **SISWA** (N) ↔ (1) **WALI_SISWA**
+* **SISWA** (1) ↔ (N) **NILAI** ↔ (1) **MATA_PELAJARAN**
+* **SISWA** (1) ↔ (N) **KEHADIRAN**
 
 ---
 
 ## 🛠️ Skema SQL & DDL (Oracle / SQL Compatible)
-
-Berikut adalah ringkasan struktur tabel utama yang digunakan dalam proyek ini:
+Berikut adalah ringkasan struktur tabel utama yang diimplementasikan dalam proyek ini:
 
 ```sql
 -- Tabel GURU
@@ -113,7 +123,7 @@ CREATE TABLE NILAI (
     CONSTRAINT NILAI_MATA_PELAJARAN_FK FOREIGN KEY (MATA_PELAJARAN_ID_Mapel) REFERENCES MATA_PELAJARAN (ID_Mapel)
 );
 
--- Tabel MENGAJAR (Relasi Many-to-Many Guru, Mapel, Kelas)
+-- Tabel MENGAJAR (Relasi Many-to-Many Guru, Mapel, dan Kelas)
 CREATE TABLE MENGAJAR (
     mengajar_id INTEGER NOT NULL,
     tahun_ajaran INTEGER,
@@ -123,6 +133,6 @@ CREATE TABLE MENGAJAR (
     KELAS_ID_Kelas INTEGER NOT NULL,
     CONSTRAINT MENGAJAR_PK PRIMARY KEY (mengajar_id),
     CONSTRAINT MENGAJAR_GURU_FK FOREIGN KEY (GURU_NIP_Guru) REFERENCES GURU (NIP_Guru),
-    CONSTRAINT MENGAJAR_MATA_PELAJARAN_FK FOREIGN KEY (MATA_PELAJARAN_ID_Mapel) REFERENCES MATA_PELAJARAN (ID_Mapel),
+    CONSTRAINT MENGAJAR_MATA_PELAJAR_FK FOREIGN KEY (MATA_PELAJARAN_ID_Mapel) REFERENCES MATA_PELAJARAN (ID_Mapel),
     CONSTRAINT MENGAJAR_KELAS_FK FOREIGN KEY (KELAS_ID_Kelas) REFERENCES KELAS (ID_Kelas)
 );
